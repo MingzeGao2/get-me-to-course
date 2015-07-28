@@ -154,10 +154,15 @@ def job():
 @user_blueprint.route('/populate')
 @login_required
 def populate():
-    job1 = Job(30038, datetime.datetime.now(), current_user.id)
-    job2 = Job(57132, datetime.datetime.now(), current_user.id)
+    job1 = Job(36091, datetime.datetime.now(), current_user.id)
+    job2 = Job(43357, datetime.datetime.now(), current_user.id)
+    job3 = Job(30128, datetime.datetime.now(), current_user.id)
+    job4 = Job(65086, datetime.datetime.now(), current_user.id)
     db.session.add(job1)
     db.session.add(job2)
+    db.session.add(job3)
+    db.session.add(job4)
+
     db.session.commit()
     return redirect(url_for('user.job'))
 
