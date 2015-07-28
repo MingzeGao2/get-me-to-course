@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<h2>Job Status</h2>
+<br>
+<table>
+ {% for job in jobs %}
+  <tr valign="top">
+    <td>{{ job.crn }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+{% endblock %}

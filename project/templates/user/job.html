@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<h2>Job Status</h2>
+<br>
+<table>
+  <tr valign="top">
+    <td> crn </td>
+    <!-- <td> availability</td> -->
+
+ {% for job in jobs %}
+  <tr valign="top">
+    <td>{{ job.crn }}</td>
+    <!-- {% if job.avaliable %} -->
+    
+    <!-- <td>yes</td> -->
+    <!-- {% else %} -->
+    <!-- <td>no</td> -->
+    <!-- {% endif %} -->
+  </tr>
+  {% endfor %}
+</table>
+
+
+{% endblock %}
