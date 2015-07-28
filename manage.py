@@ -18,7 +18,8 @@ from pyquery import PyQuery as pq
 import mechanize
 import cookielib
 
-app.config.from_object(os.environ['APP_SETTINGS'])
+# app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object("project.config.DevelopmentConfig")
 
 migrate = Migrate(app, db)
 manager = Manager(app)
