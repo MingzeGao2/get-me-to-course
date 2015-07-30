@@ -5,7 +5,7 @@ import os
 import unittest
 import coverage
 
-from flask.ext.script import Manager
+from flask.ext.script import Manager, Server
 from flask.ext.migrate import Migrate, MigrateCommand
 
 from project import app, db
@@ -17,13 +17,15 @@ from  service import sendEmail, getCourse
 from pyquery import PyQuery as pq
 import mechanize
 import cookielib
+import datetime
 
 # app.config.from_object(os.environ['APP_SETTINGS'])
 app.config.from_object("project.config.DevelopmentConfig")
 
 migrate = Migrate(app, db)
 manager = Manager(app)
-
+server = Server(host="0.0.0.0", port=5000)
+manager.add_command('runserver', server)
 # migrations
 manager.add_command('db', MigrateCommand)
 # service frequency
@@ -54,6 +56,9 @@ def worker():
         for i in xrange(len(jobs)):
             crn = jobs[i].crn
             res = getCourse(br,crn)
+            jobs[i].timestamp=datetime.datetime.now()
+            db.session.add(jobs[i])
+            db.session.commit()
             if res:
                 print jobs[i].master.email ,res["description"],
                 x = res["remaining"]
@@ -145,3 +150,4 @@ def create_admin():
 if __name__ == '__main__':
     master()
     manager.run()
+

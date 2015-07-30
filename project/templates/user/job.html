@@ -6,12 +6,13 @@
 <br>
 <table>
   <tr valign="top">
-    <td> crn </td>
-    <!-- <td> availability</td> -->
+    <td style="padding:5px;text-align=left;"> crn </td>
+    <td style="padding:5px;text-align=left;"> last update</td>
 
  {% for job in jobs %}
   <tr valign="top">
-    <td>{{ job.crn }}</td>
+    <td style="padding:5px; text-align=left;"> {{ job.crn }}</td>
+    <td style="padding:5px; text-align=left;">{{ job.timestamp }}</td>
     <!-- {% if job.avaliable %} -->
     
     <!-- <td>yes</td> -->
