@@ -27,7 +27,7 @@ base_url = "https://ui2web1.apps.uillinois.edu/BANPROD1/bwckschd.p_disp_detail_s
 def get_msg(description, specification):
     if  specification == 0:
         return  "\r\n".join([
-            "From: mingze.gao.gmz@gmail.com",
+            "From:master.getmeclasses@gmail.com",
             "To: mingzegao1994.gmz@gmail.com",
             "Subject: Catch This",
             "",
@@ -44,11 +44,11 @@ def get_msg(description, specification):
 
     
 def sendEmail(description, specification, to_addr):
-    from_addr = "mingze.gao.gmz@gmail.com"
+    from_addr = "master.getmeclassses@gmail.com"
     # to_addr = ["mingzegao1994.gsdfmz@gsdfmail.com", "mingze.gao.gmz@gmailsdf.com"]
     # to_addr= "sdf.sdlfjsldjf"
-    username = 'mingze.gao.gmz@gmail.com'
-    password = 'qtncejoibqbpgvfs'
+    username = 'master.getmeclassses@gmail.com'
+    password = 'dtyblbfoozujdsrl'
     try:
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.ehlo()

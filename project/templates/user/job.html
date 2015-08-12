@@ -1,26 +1,125 @@
 {% extends "_base.html" %}
 
 {% block content %}
+<style>
+  .green{
+    color: green;
+    background-size: auto;
+  }
+
+  .red{
+    color: red;
+    width: auto;
+  }
+
+  .jobdiv{
+    background-color: #66CCFF;
+    width: auto;
+    padding: 10px;
+    /*margin: 5px;*/
+  }
+
+</style>
 
 <h2>Job Status</h2>
 <br>
 <table>
-  <tr valign="top">
-    <td> crn </td>
-    <!-- <td> availability</td> -->
+  <form class="form-login" role="form" method="post" action="">
+    {{ form.csrf_token }}
+    <div class="container">
+      <table>
+        <tr>
+          {% for crn in form.crns %}
+            {% for field in crn %}
+             <td>{{field()}}</td>
+             <!-- <td><input name={{field.name}} -->
+            {% endfor %}
+          {% endfor %}
+        </tr>
+      </table>
+<!--       <ul class="...">
+        {% for error in form.errors %}
+          <li> {{error}} </li>
+        {% endfor %}
+      </ul> -->
+    <div>
+    <br />
+    <button class="btn btn-success" id="submitClasses" type="submit">Get Classes!</button>
+  </form>
+  <br />
+<!--   <div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+        {% for message in messages %}
+              <li>
+                {{ message }}
+              </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% endwith %}
+  </div> -->
 
- {% for job in jobs %}
-  <tr valign="top">
-    <td>{{ job.crn }}</td>
-    <!-- {% if job.avaliable %} -->
-    
-    <!-- <td>yes</td> -->
-    <!-- {% else %} -->
-    <!-- <td>no</td> -->
-    <!-- {% endif %} -->
-  </tr>
-  {% endfor %}
 </table>
+<br />
 
+<div class="container">
+  <div class="row">
+  <!-- <div class="col-sm-4"> -->
+ {% for job in jobs %}
+  {% if job.avaliable %}
+  <div class="col-sm-4">
+    <div class="green jobdiv">
+  {% else %}
+  <div class="col-sm-4">
+    <div class="red jobdiv">
+  {% endif %}
+    <tr valign="top">
+      <td><a href="#" class="close">Delete X</a></td><br />
+      <td class="jobcrn">{{ job.crn }}</td><br />
+      <td>{{ job.timestamp }}</td><br />
+    </tr>
+  </div>
+  </div>
+  <!-- <br /> -->
+  {% endfor %}
+<!-- </div> -->
+</div>
+</div>
+
+<script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+<script type="text/javascript">
+  // var jobdivs = document.getElementsByClassName('jobdiv');
+
+  // for (var i=0; i<jobdivs.length; i++) {
+  //   jobdivs[i].addEventListener("click", deleteJob);
+  // }
+
+  // function deleteJob() {
+
+  // }
+  // $DELROUTE = {{ delroute }}
+  $(document).ready(function(){
+    $('.close').click(function() {
+      var jobcrn = $(this).siblings('.jobcrn').val();
+      $(this).parent().parent().remove();
+      $.ajax({
+        url: '/deletejob',
+        data: jobcrn,
+        type: 'POST',
+        success: function(respond) {
+          console.log(respond);
+        // }
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    });
+  });
+
+
+</script>
 
 {% endblock %}

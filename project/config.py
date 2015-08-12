@@ -22,11 +22,14 @@ class BaseConfig(object):
     MAIL_USE_SSL = True
 
     # gmail authentication
-    MAIL_USERNAME = "mingze.gao.gmz@gmail.com"
-    MAIL_PASSWORD = 'qtncejoibqbpgvfs'
+    # MAIL_USERNAME = "mingze.gao.gmz@gmail.com"
+    # MAIL_PASSWORD = 'qtncejoibqbpgvfs'
+    MAIL_USERNAME = "master.getmeclassses@gmail.com"
+    MAIL_PASSWORD = "dtyblbfoozujdsrl"
 
     # mail accounts
-    MAIL_DEFAULT_SENDER = 'mingze.gao.gmz@gmail.com'
+    # MAIL_DEFAULT_SENDER = 'mingze.gao.gmz@gmail.com'
+    MAIL_DEFAULT_SENDER = "master.getmeclassses@gmail.com"
 
     
 

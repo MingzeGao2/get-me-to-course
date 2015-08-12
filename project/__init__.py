@@ -13,6 +13,7 @@ from flask.ext.bcrypt import Bcrypt
 from flask_mail import Mail
 from flask.ext.debugtoolbar import DebugToolbarExtension
 from flask.ext.sqlalchemy import SQLAlchemy
+from crn_validator import initBrowser
 
 ################
 #### config ####
@@ -33,6 +34,7 @@ bcrypt = Bcrypt(app)
 mail = Mail(app)
 toolbar = DebugToolbarExtension(app)
 db = SQLAlchemy(app)
+browser = initBrowser()
 
 
 ####################

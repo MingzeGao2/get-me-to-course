@@ -6,18 +6,19 @@
 #################
 
 from flask import render_template, Blueprint, url_for, \
-    redirect, flash, request
+    redirect, flash, request, json
 from flask.ext.login import login_user, logout_user, \
     login_required, current_user
 
 from project.models import User, Job
 # from project.email import send_email
 from project import db, bcrypt
-from .forms import LoginForm, RegisterForm, ChangePasswordForm
+from .forms import LoginForm, RegisterForm, ChangePasswordForm, PickingClassForm
 from project.token import generate_confirmation_token, confirm_token
 import datetime
 from project.email import send_email
 from project.decorators import check_confirmed
+# from config import basedir
 ################
 #### config ####
 ################
@@ -33,6 +34,7 @@ user_blueprint = Blueprint('user', __name__,)
 def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
+        print form.password.data
         user = User(
             email=form.email.data,
             password=form.password.data,
@@ -141,14 +143,41 @@ def unconfirmed():
     flash('Please confirm your accound!', 'warning')
     return render_template('user/unconfirmed.html')
 
-@user_blueprint.route('/job')
+@user_blueprint.route('/job', methods=['GET', 'POST'])
 @login_required
 @check_confirmed
 def job():
     
     jobs = Job.query.filter_by(user_id=current_user.id) 
-    return render_template('user/job.html', jobs=jobs)
+    
+    form = PickingClassForm(request.form)
 
+    # crn_list = {}
+    if form.validate_on_submit():
+        for crn in form.crns:
+            for field in crn:
+                if field.data != '' and field.data != None and field.data != 'None': #and form.validate_crn(field.data):
+                    job = Job(field.data, datetime.datetime.now(), current_user.id)
+                    db.session.add(job)
+        db.session.commit()
+
+    # delroute = basedir + "/deletejob"
+
+    return render_template('user/job.html', jobs=jobs, form=form)#, delroute=delroute)
+
+
+@user_blueprint.route('/deletejob', methods=['POST'])
+@login_required
+@check_confirmed
+def deljob():
+    jobcrn = request.data
+    try:
+        job = Job.query.filter_by(user_id=current_user.id, crn=jobcrn)
+        db.session.delete(job)
+        db.commit()
+        return json.dumps({'status':'OK'})
+    except:
+        return json.dumps({'status':'NOPE'})
 
 
 @user_blueprint.route('/populate')
