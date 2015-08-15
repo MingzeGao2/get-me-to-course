@@ -43,9 +43,7 @@ def worker():
     br.set_handle_redirect(True)
     br.set_handle_referer(True)
     br.set_handle_robots(False)
-    # Follows refresh 0 but not hangs on refresh > 0
     br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
-    # User-Agent (this is cheating, ok?)
     br.addheaders = [('User-agent', 'Chrome')]
 
     while (True):
@@ -55,25 +53,33 @@ def worker():
             crn = jobs[i].crn
             res = getCourse(br,crn)
             if res:
-                print jobs[i].master.email ,res["description"],
+                print jobs[i].master.email ,res["description"],"avaliable:",jobs[i].available
                 x = res["remaining"]
                 if (x[0] > 0 and x[1] > 0):
-                    if (jobs[i].available):
+                    if (not jobs[i].available):
+                        jobs[i].available=True
+                        db.session.add(jobs[i])
+                        db.session.commit()
+                    if (jobs[i].send_indicator):
                         print ": seats available"
                     else:
                         print ": seats available"
                         print "\tSending email to %s"%jobs[i].master.email
                         p = Process(target=sendEmail, args=(res["description"], 0, jobs[i].master.email))
                         p.start()
-                        jobs[i].available=True
+                        jobs[i].send_indicator=True
                         db.session.add(jobs[i])
                         db.session.commit()
                 else:
                     if (jobs[i].available):
+                        jobs[i].available = False
+                        db.session.add(jobs[i])
+                        db.session.commit()
+                    if (jobs[i].send_indicator):
                         print ": on seats available"
                         print "\tSending email %s" %jobs[i].master.email                    
                         p = Process(target=sendEmail, args=(res["description"],1, jobs[i].master.email))
-                        jobs[i].available=False
+                        jobs[i].send_indicator=False
                         db.session.add(jobs[i])
                         db.session.commit()
                     else:

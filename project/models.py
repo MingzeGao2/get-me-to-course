@@ -49,7 +49,9 @@ class Job(db.Model):
     crn = db.Column(db.Integer, nullable = False)
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    send_indicator = db.Column(db.Boolean, nullable = False, default = False)
     available = db.Column(db.Boolean, nullable = False, default = False)
+    
     def __repr__(self):
         return '<Job %d from User %d>' % (self.crn, self.user_id)
         

@@ -1,6 +1,4 @@
 # project/user/forms.py
-
-
 from flask_wtf import Form
 from wtforms import TextField, PasswordField, FieldList, FormField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, Optional
@@ -35,8 +33,6 @@ class RegisterForm(Form):
     )
 
     def validate(self):
-        print "This is the type of email",type(self.email)
-        print "This is the type of email.errors",type(self.email.errors)
         initial_validation = super(RegisterForm, self).validate()
         if not initial_validation:
             return False
@@ -61,53 +57,31 @@ class ChangePasswordForm(Form):
     )
 
 class crnForm(Form):
-    crn = TextField('crn', validators=[Length(5), Optional()])
-    
+    crn = TextField('crn', validators=[Length(5), Optional()])    
     def validate_crn(self):
-        print "This is the type of crn", type(self.crn)
-        print "This is the type of crn.errors:", type(self.crn.errors)
-        # valid = True
-        # print mycrn
         if self.crn.data != '' and not is_valid_crn(browser, self.crn.data):
-            print type(self.crn.data)
-            print self.crn.data
-            # print mycrn
-            # print crn.value
-            # self.crn.errors.append(self.crn.data+': Invalid crn. Please check and try again!')
-            flash(self.crn.data+': Invalid crn. Please check and try again!')
+            flash(self.crn.data+': Invalid crn. Please check and try again!', 'danger')
             return False
-        jobs = Job.query.filter_by(user_id=current_user.id)
-        if self.crn.data in [job.crn for job in jobs]:
-            # self.crn.errors.append(self.crn.data+': Class already being tracked!')
-            flash(self.crn.data+': Class already being tracked!')
-            return False
+        jobs = Job.query.filter_by(user_id=current_user.id).all()
+        for job in jobs:
+            if self.crn.data == str(job.crn):
+                flash(self.crn.data+': Class already being tracked!', 'danger')
+                return False
         return True
 
     def validate(self):
-        # print "AHHHHHHHHHH!!!", self.crn.data
-        # initial_validation = super(crnForm, self).validate()
-        # if not initial_validation:
-            # return False
-        # print "BBBHHHHHHHHHHH!!!", self.crn.data
-        valid = self.validate_crn()
-        return valid
+        return self.validate_crn()
 
 class PickingClassForm(Form):
-    # crn1 = TextField('crn1', validators=[Length(5)])
-    # crn2 = TextField('crn2', validators=[Length(5)])
-    # crn3 = TextField('crn2', validators=[Length(5)])
-    # crn4 = TextField('crn2', validators=[Length(5)])
-    # crn5 = TextField('crn2', validators=[Length(5)])
     crns = FieldList(FormField(crnForm), min_entries=5, max_entries=5)
-# Do we need at least one class filled out ???
-
-
-    # for crn in self.crns:
-    #     for field in crn:
-    #         valid = valid & self.validate_crn(field.data)
-    # return valid
-
-
-
+    
+    def validate(self):
+        jobs = Job.query.filter_by(user_id=current_user.id).all()
+        job_count = len(jobs)
+        if job_count >= 5:
+            flash('Sorry, You can monitor at most 5 courses!', 'danger')
+            return False
+        else:
+            return all([crn.validate_crn() for crn in self.crns])
 
 

@@ -11,7 +11,6 @@ from flask.ext.login import login_user, logout_user, \
     login_required, current_user
 
 from project.models import User, Job
-# from project.email import send_email
 from project import db, bcrypt
 from .forms import LoginForm, RegisterForm, ChangePasswordForm, PickingClassForm
 from project.token import generate_confirmation_token, confirm_token
@@ -160,9 +159,6 @@ def job():
                     job = Job(field.data, datetime.datetime.now(), current_user.id)
                     db.session.add(job)
         db.session.commit()
-
-    # delroute = basedir + "/deletejob"
-
     return render_template('user/job.html', jobs=jobs, form=form)#, delroute=delroute)
 
 
@@ -170,36 +166,15 @@ def job():
 @login_required
 @check_confirmed
 def deljob():
-    print request
-    print request.json
-    print request.json['jobcrn']
     jobcrn = int(str(request.json['jobcrn']))
-    print jobcrn
-    # try:
-    jobs = Job.query.filter_by(user_id=current_user.id, crn=jobcrn)
-    for job in jobs:
-        db.session.delete(job)
-        db.session.commit()
-    return json.dumps({'status':'OK'})
-    # except:
-        # return json.dumps({'status':'NOPE'})
-
-
-@user_blueprint.route('/populate')
-@login_required
-def populate():
-    job1 = Job(36091, datetime.datetime.now(), current_user.id)
-    job2 = Job(43357, datetime.datetime.now(), current_user.id)
-    job3 = Job(30128, datetime.datetime.now(), current_user.id)
-    job4 = Job(65086, datetime.datetime.now(), current_user.id)
-    db.session.add(job1)
-    db.session.add(job2)
-    db.session.add(job3)
-    db.session.add(job4)
-
-    db.session.commit()
-    return redirect(url_for('user.job'))
-
+    try:
+        jobs = Job.query.filter_by(user_id=current_user.id, crn=jobcrn)
+        for job in jobs:
+            db.session.delete(job)
+            db.session.commit()
+        return json.dumps({'status':'OK'})
+    except:
+        return json.dumps({'status':'NOPE'})
 
 @user_blueprint.route('/clean')
 def clean():
