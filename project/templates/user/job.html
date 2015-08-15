@@ -103,11 +103,13 @@
     $(".close").click(function() {
       // console.log($(this))
       var jobcrn = $(this).parent().parent().next().text();
+      var jobcrnJSON = {'jobcrn' : jobcrn}
       console.log(jobcrn);
-      $(this).parent().parent().remove();
+      $(this).parents('.col-sm-4').remove();
       $.ajax({
         url: '/deletejob',
-        data: jobcrn,
+        data: JSON.stringify(jobcrnJSON),
+        contentType: 'application/json;charset=UTF-8',
         type: 'POST',
         success: function(respond) {
           console.log(respond);

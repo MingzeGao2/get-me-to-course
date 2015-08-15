@@ -170,14 +170,19 @@ def job():
 @login_required
 @check_confirmed
 def deljob():
-    jobcrn = int(request.data)
-    try:
-        job = Job.query.filter_by(user_id=current_user.id, crn=jobcrn)
+    print request
+    print request.json
+    print request.json['jobcrn']
+    jobcrn = int(str(request.json['jobcrn']))
+    print jobcrn
+    # try:
+    jobs = Job.query.filter_by(user_id=current_user.id, crn=jobcrn)
+    for job in jobs:
         db.session.delete(job)
-        db.commit()
-        return json.dumps({'status':'OK'})
-    except:
-        return json.dumps({'status':'NOPE'})
+        db.session.commit()
+    return json.dumps({'status':'OK'})
+    # except:
+        # return json.dumps({'status':'NOPE'})
 
 
 @user_blueprint.route('/populate')
