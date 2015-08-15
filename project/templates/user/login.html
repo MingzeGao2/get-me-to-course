@@ -1,7 +1,25 @@
 {% extends "_base.html" %}
 
 {% block content %}
+<style>
+  
+  #logindiv {
+    /*margin-left: 20px;*/
+    /*width: 380px;*/
+    border: black solid 2px;
+  }
 
+  #anouncementdiv {
+    /*width: 300px;*/
+    border: black solid 2px;
+    /*float: right;*/
+  }
+
+</style>
+
+<div class="container">
+<div class="row">
+<div id="logindiv" class="col-sm-4">
 <h1>Please login</h1>
 <br>
 <form class="form-login" role="form" method="post" action="">
@@ -30,5 +48,19 @@
   <br><br>
   <p>Need to <a href="/register">Register</a>?</p>
 </form>
+</div>
+
+<div class="col-sm-1"></div>
+
+<div id="anouncementdiv" class="col-sm-7">
+
+  <h1>Anouncement</h1>
+  <!-- {% block anouncement %}{% endblock %} -->
+  {% include "anouncement.html" %}
+
+</div>
+
+</div>
+</div>
 
 {% endblock %}

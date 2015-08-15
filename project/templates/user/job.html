@@ -3,24 +3,59 @@
 {% block content %}
 <style>
   .green{
-    color: green;
-    background-size: auto;
+    background-color: #70C471;
+    width: auto;
   }
 
   .red{
-    color: red;
+    background-color: #F7545F;
     width: auto;
   }
 
   .jobdiv{
-    background-color: #66CCFF;
+    /*background-color: #66CCFF;*/
+    color: white;
     width: auto;
     padding: 10px;
-    /*margin: 5px;*/
+    margin: 5px;
+  }
+
+  .close{
+    font-size: 16px;
+  }
+
+  .jobtable {
+    width: 100%;
+  }
+
+  #subbody {
+
+  }
+
+  #upperdiv {
+    width: 85%;
+    height: 240px;
+    padding-left: 30px;
+    margin: auto;
+    border-radius: 25px;
+    border: black solid 2px;
+    background: rgba(138, 192, 7, 0.2);
+
+  }
+
+  #lowerdiv {
+    width: 100%;
+    height: 200px;
+    padding: 15px;
+    /*margin: auto;*/
+    border-radius: 15px 50px;
+    border: black solid 2px;
+    background: rgba(52, 247, 238, 0.2);
   }
 
 </style>
-
+<div id="subbody">
+<div id="upperdiv">
 <h2>Job Status</h2>
 <br>
 <table>
@@ -37,55 +72,39 @@
           {% endfor %}
         </tr>
       </table>
-<!--       <ul class="...">
-        {% for error in form.errors %}
-          <li> {{error}} </li>
-        {% endfor %}
-      </ul> -->
     <div>
     <br />
     <button class="btn btn-success" id="submitClasses" type="submit">Get Classes!</button>
   </form>
   <br />
-<!--   <div>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <ul>
-        {% for message in messages %}
-              <li>
-                {{ message }}
-              </li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    {% endwith %}
-  </div> -->
-
 </table>
 <br />
+</div>
 
-<div class="container">
+<div style="width:100%; height:40px;"></div>
+
+<div class="container" id="lowerdiv">
   <div class="row">
   <!-- <div class="col-sm-4"> -->
  {% for job in jobs %}
-  {% if job.avaliable %}
-  <div class="col-sm-4">
+  {% if job.available %}
+  <div class="col-sm-3">
     <div class="green jobdiv">
   {% else %}
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <div class="red jobdiv">
   {% endif %}
-    <table>
+    <table class="jobtable">
     <tr>
       <td>
-        <a href="#" class="close">Delete X</a>
+        <a href="#" class="close">X</a>
       </td>
     </tr>
     <tr>
       <td class="jobcrn">{{ job.crn }}</td>
     </tr>
     <tr>
-      <td>{{ job.timestamp }}</td>
+      <td>{{ job.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
     </tr>
     </table>
   </div>
@@ -95,6 +114,8 @@
 <!-- </div> -->
 </div>
 </div>
+</div>
+<!-- <div style="width:100%; height:20px;"></div> -->
 
 <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
 <script type="text/javascript">
