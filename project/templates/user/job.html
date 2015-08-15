@@ -75,11 +75,19 @@
   <div class="col-sm-4">
     <div class="red jobdiv">
   {% endif %}
-    <tr valign="top">
-      <td><a href="#" class="close">Delete X</a></td><br />
-      <td class="jobcrn">{{ job.crn }}</td><br />
-      <td>{{ job.timestamp }}</td><br />
+    <table>
+    <tr>
+      <td>
+        <a href="#" class="close">Delete X</a>
+      </td>
     </tr>
+    <tr>
+      <td class="jobcrn">{{ job.crn }}</td>
+    </tr>
+    <tr>
+      <td>{{ job.timestamp }}</td>
+    </tr>
+    </table>
   </div>
   </div>
   <!-- <br /> -->
@@ -90,19 +98,12 @@
 
 <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
 <script type="text/javascript">
-  // var jobdivs = document.getElementsByClassName('jobdiv');
 
-  // for (var i=0; i<jobdivs.length; i++) {
-  //   jobdivs[i].addEventListener("click", deleteJob);
-  // }
-
-  // function deleteJob() {
-
-  // }
-  // $DELROUTE = {{ delroute }}
   $(document).ready(function(){
-    $('.close').click(function() {
-      var jobcrn = $(this).siblings('.jobcrn').val();
+    $(".close").click(function() {
+      // console.log($(this))
+      var jobcrn = $(this).parent().parent().next().text();
+      console.log(jobcrn);
       $(this).parent().parent().remove();
       $.ajax({
         url: '/deletejob',

@@ -170,7 +170,7 @@ def job():
 @login_required
 @check_confirmed
 def deljob():
-    jobcrn = request.data
+    jobcrn = int(request.data)
     try:
         job = Job.query.filter_by(user_id=current_user.id, crn=jobcrn)
         db.session.delete(job)
