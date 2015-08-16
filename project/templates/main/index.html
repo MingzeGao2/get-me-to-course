@@ -1,8 +1,37 @@
 {% extends "_base.html" %}
 {% block content %}
+<style>
+	
+	.color1 {
+		background-color: rgba(138, 192, 7, 0.05);
+	}
+
+	.color2 {
+		background-color: rgba(52, 247, 238, 0.05);
+	}
+
+</style>
+
 
 <h1>Welcome!</h1>
-<br>
+<h4>For you to better use the website, we have a brief usage guideline below:</h4>
+<br />
+
+<ul>
+	<li class="color1">"Profile" on the navigation bar will take you to your own profile where you can see the email address you register with and can change your password.</li>
+
+	<li class="color2">"Job" on the navigation bar will take you to course tracking page where you can add, remove and check "jobs", courses tracked of your choice.</li>
+
+	<li class="color1">Now during Beta round, you are able to keep tracking of at most 5 different crn's at once.</li>
+
+	<li class="color2">A notice will be sent to the email you register with when there is a change in the availability of sessions you chose. (i.e. when an previously unavailable session becomes unavailable, or vice versa.</li>
+
+	<li class="color1">You are encouraged to remove from your jobs the courses you already successfully get in. This is for you not to get excessive emails and for us to reduce server load.</li>
+
+	<li class="color2">Also on the "Job" page, your jobs are color coded for your convenience, with red being unavailable and green available.</li>
+</ul>
+
+<br />
 <p><a href="/logout">Logout</a>
 
 {% endblock %}
