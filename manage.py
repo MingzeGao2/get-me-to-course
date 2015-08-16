@@ -1,6 +1,4 @@
 # manage.py
-
-
 import os
 import sys
 import unittest
@@ -28,11 +26,7 @@ manager = Manager(app)
 # migrations
 manager.add_command('db', MigrateCommand)
 # service frequency
-waittime=60   
-
-
-sys.stdout = open("log.txt", 'w')
-sys.stderr = open("error.txt", 'w')
+waittime=300   
 
 def worker():
     # Browser
