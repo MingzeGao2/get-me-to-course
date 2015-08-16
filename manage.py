@@ -3,6 +3,7 @@ import os
 import sys
 import unittest
 import coverage
+import datetime
 
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -18,7 +19,8 @@ import mechanize
 import cookielib
 
 # app.config.from_object(os.environ['APP_SETTINGS'])
-app.config.from_object("project.config.DevelopmentConfig")
+app.config.from_object(os.environ['APP_SETTINGS'])
+#app.config.from_object("project.config.ProductionConfig")
 
 migrate = Migrate(app, db)
 manager = Manager(app)
@@ -50,7 +52,7 @@ def worker():
             crn = jobs[i].crn
             res = getCourse(br,crn)
             if res:
-                print jobs[i].master.email ,res["description"],"avaliable:",jobs[i].available
+                print datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), jobs[i].master.email ,res["description"],"avaliable:",jobs[i].available
                 x = res["remaining"]
                 if (x[0] > 0 and x[1] > 0):
                     if (not jobs[i].available):

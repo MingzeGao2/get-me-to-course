@@ -22,8 +22,8 @@ from crn_validator import initBrowser
 app = Flask(__name__)
 
 # app.config.from_object(os.environ['APP_SETTINGS'])
-app.config.from_object("project.config.DevelopmentConfig")
-
+#app.config.from_object("project.config.ProductionConfig")
+app.config.from_object(os.environ['APP_SETTINGS'])
 ####################
 #### extensions ####
 ####################

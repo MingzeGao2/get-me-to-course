@@ -31,17 +31,17 @@ class BaseConfig(object):
 
     # mail accounts
     # MAIL_DEFAULT_SENDER = 'mingze.gao.gmz@gmail.com'
-    MAIL_DEFAULT_SENDER = "master.getmeclassses@gmail.com"
+    MAIL_DEFAULT_SENDER = mail_address
 
     
 
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration."""
-    DEBUG = True
+    DEBUG = False
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.sqlite')
-    DEBUG_TB_ENABLED = True
+    DEBUG_TB_ENABLED = False
 
 
 class TestingConfig(BaseConfig):
@@ -55,9 +55,14 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     """Production configuration."""
-    SECRET_KEY = 'my_precious'
+   # SECRET_KEY = 'my_precious'
+    #DEBUG = False
+###    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/example' 
+ #   SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.sqlite')
+  #  DEBUG_TB_ENABLED = False
+#    STRIPE_SECRET_KEY = 'foo'
+ #   STRIPE_PUBLISHABLE_KEY = 'bar'
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/example'
+    WTF_CSRF_ENABLED = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.sqlite')
     DEBUG_TB_ENABLED = False
-    STRIPE_SECRET_KEY = 'foo'
-    STRIPE_PUBLISHABLE_KEY = 'bar'
