@@ -53,10 +53,12 @@ def worker():
             res = getCourse(br,crn)
             if res:
                 print datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), jobs[i].master.email ,res["description"],"avaliable:",jobs[i].available
+                jobs[i].timestamp=datetime.datetime.now()
                 x = res["remaining"]
                 if (x[0] > 0 and x[1] > 0):
                     if (not jobs[i].available):
                         jobs[i].available=True
+                        jobs[i].timestamp=datetime.datetime.now()
                         db.session.add(jobs[i])
                         db.session.commit()
                     if (jobs[i].send_indicator):
@@ -71,6 +73,7 @@ def worker():
                         db.session.commit()
                 else:
                     if (jobs[i].available):
+                        jobs[i].timestamp=datetime.datetime.now()
                         jobs[i].available = False
                         db.session.add(jobs[i])
                         db.session.commit()
@@ -83,6 +86,9 @@ def worker():
                         db.session.commit()
                     else:
                         print ": no seats available"
+                db.session.add(jobs[i])
+                db.session.commit()
+
         time.sleep(waittime)
 
     
