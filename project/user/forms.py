@@ -77,8 +77,12 @@ class PickingClassForm(Form):
     
     def validate(self):
         jobs = Job.query.filter_by(user_id=current_user.id).all()
-        job_count = len(jobs)
-        if job_count >= 5:
+        form_count = 0
+        for crn in self.crns:
+            if crn.data['crn'] != '':
+                form_count+=1
+        job_count = len(jobs) + form_count
+        if job_count > 5:
             flash('Sorry, You can monitor at most 5 courses!', 'danger')
             return False
         else:
