@@ -1,12 +1,3 @@
-"""
-easy_install pip
-pip install pyquery
-pip install mechanize
-
-Mechanize is used, so that it is easy to later add automatic registration.
-The login function logs you in to enterprise. All that is now necessary is
-the actual automatic registration code...
-"""
 from pyquery import PyQuery as pq
 import mechanize
 import cookielib
@@ -14,10 +5,10 @@ import time
 import smtplib
 from multiprocessing import Process
 import os
+import sys
 
-#A list of the CRNs of each class
-# courses = [36091, 36047, 43357,58792, 30128, 49546, 65086, 46792, 40091,  32108, 32103, 40083]
-#40083
+sys.stdout = open("log.txt", 'w')
+sys.stderr = open("error.txt", 'w')
 
 # url for query
 base_url = "https://ui2web1.apps.uillinois.edu/BANPROD1/bwckschd.p_disp_detail_sched?term_in=120158&crn_in="
