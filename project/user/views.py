@@ -100,7 +100,7 @@ def profile():
 
 
 @user_blueprint.route('/confirm/<token>')
-@login_required
+# @login_required
 def confirm_email(token):
     print "confirm email"
     try:
@@ -137,9 +137,10 @@ def resend_confirmation():
 @user_blueprint.route('/unconfirmed')
 @login_required
 def unconfirmed():
-    if current_user.confirmed:
+    current_user_confirm = User.query.filter_by(id=current_user.id).first().confirmed
+    if current_user_confirm:
         return redirect('main.home')
-    flash('Please confirm your accound!', 'warning')
+    flash('Please confirm your account!', 'warning')
     return render_template('user/unconfirmed.html')
 
 @user_blueprint.route('/job', methods=['GET', 'POST'])
