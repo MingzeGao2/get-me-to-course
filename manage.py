@@ -2,6 +2,7 @@
 
 
 import os
+import sys
 import unittest
 import coverage
 
@@ -30,6 +31,8 @@ manager.add_command('db', MigrateCommand)
 waittime=60   
 
 
+sys.stdout = open("log.txt", 'w')
+sys.stderr = open("error.txt", 'w')
 
 def worker():
     # Browser
@@ -146,8 +149,14 @@ def create_admin():
         confirmed=True,
         confirmed_on=datetime.datetime.now()))
     db.session.commit()
+
     
+@manager.command
+def service():
+    """Start the query service."""
+    master()
+    app.run(host="0.0.0.0")
+
 
 if __name__ == '__main__':
-    master()
     manager.run()
