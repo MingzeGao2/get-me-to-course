@@ -148,7 +148,8 @@ def unconfirmed():
 @check_confirmed
 def job():
     
-    jobs = Job.query.filter_by(user_id=current_user.id) 
+    jobs = Job.query.filter_by(user_id=current_user.id)
+    print "getjobs:", jobs
     
     form = PickingClassForm(request.form)
 
@@ -168,8 +169,10 @@ def job():
 @check_confirmed
 def deljob():
     jobcrn = int(str(request.json['jobcrn']))
+    print jobcrn
     try:
         jobs = Job.query.filter_by(user_id=current_user.id, crn=jobcrn)
+        print jobs
         for job in jobs:
             db.session.delete(job)
             db.session.commit()

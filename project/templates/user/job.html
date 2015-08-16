@@ -35,8 +35,8 @@
   #upperdiv {
     width: 85%;
     height: 240px;
-    padding-left: 30px;
-    margin: auto;
+    /*padding-left: 30px;*/
+    /*margin: auto;*/
     border-radius: 25px;
     border: black solid 2px;
     background: rgba(138, 192, 7, 0.2);
@@ -44,76 +44,72 @@
   }
 
   #lowerdiv {
-    width: 100%;
+/*    width: 100%;
     height: 200px;
     padding: 15px;
-    /*margin: auto;*/
     border-radius: 15px 50px;
     border: black solid 2px;
-    background: rgba(52, 247, 238, 0.2);
+    background: rgba(52, 247, 238, 0.2);*/
   }
 
 </style>
 <div id="subbody">
-<div id="upperdiv">
-<h2>Job Status</h2>
-<br>
-<table>
-  <form class="form-login" role="form" method="post" action="">
-    {{ form.csrf_token }}
-    <div class="container">
-      <table>
-        <tr>
-          {% for crn in form.crns %}
-            {% for field in crn %}
-             <td>{{field()}}</td>
-             <!-- <td><input name={{field.name}} -->
-            {% endfor %}
-          {% endfor %}
-        </tr>
-      </table>
-    <div>
+  <div id="upperdiv">
+    <h2>Job Status</h2>
     <br />
-    <button class="btn btn-success" id="submitClasses" type="submit">Get Classes!</button>
-  </form>
-  <br />
-</table>
-<br />
-</div>
-
-<div style="width:100%; height:40px;"></div>
-
-<div class="container" id="lowerdiv">
-  <div class="row">
-  <!-- <div class="col-sm-4"> -->
- {% for job in jobs %}
-  {% if job.available %}
-  <div class="col-sm-3">
-    <div class="green jobdiv">
-  {% else %}
-  <div class="col-sm-3">
-    <div class="red jobdiv">
-  {% endif %}
-    <table class="jobtable">
-    <tr>
-      <td>
-        <a href="#" class="close">X</a>
-      </td>
-    </tr>
-    <tr>
-      <td class="jobcrn">{{ job.crn }}</td>
-    </tr>
-    <tr>
-      <td>{{ job.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
-    </tr>
+    <table>
+      <form class="form-login" role="form" method="post" action="">
+        {{ form.csrf_token }}
+        <div class="container">
+          <table>
+            <tr>
+              {% for crn in form.crns %}
+                {% for field in crn %}
+                  <td>{{field()}}</td>
+             <!-- <td><input name={{field.name}} -->
+                {% endfor %}
+              {% endfor %}
+            </tr>
+          </table>
+        </div>
+        <br />
+        <button class="btn btn-success" id="submitClasses" type="submit">Get Classes!</button>
+      </form>
+      <br />
     </table>
+    <br />
   </div>
+
+  <div style="width:100%; height:40px;"></div>
+
+  <div class="container" id="lowerdiv">
+    <div class="row">
+      {% for job in jobs %}
+        {% if job.available %}
+          <div class="col-sm-3 jobdivwrapper">
+            <div class="green jobdiv">
+        {% else %}
+          <div class="col-sm-3 jobdivwrapper">
+            <div class="red jobdiv">
+        {% endif %}
+              <table class="jobtable">
+                <tr>
+                  <td>
+                    <a href="#" class="close">X</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="jobcrn">{{ job.crn }}</td>
+                </tr>
+                <tr>
+                <td>{{ job.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
-  <!-- <br /> -->
-  {% endfor %}
-<!-- </div> -->
-</div>
-</div>
 </div>
 <!-- <div style="width:100%; height:20px;"></div> -->
 
@@ -126,7 +122,8 @@
       var jobcrn = $(this).parent().parent().next().text();
       var jobcrnJSON = {'jobcrn' : jobcrn}
       console.log(jobcrn);
-      $(this).parents('.col-sm-4').remove();
+      console.log($(this).parents('.jobdivwrapper'))
+      $(this).parents('.jobdivwrapper').remove();
       $.ajax({
         url: '/deletejob',
         data: JSON.stringify(jobcrnJSON),
