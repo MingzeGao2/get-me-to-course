@@ -33,35 +33,44 @@
   }
 
   #upperdiv {
-    width: 85%;
+/*    width: 100%;
     height: 240px;
-    /*padding-left: 30px;*/
-    /*margin: auto;*/
     border-radius: 25px;
     border: black solid 2px;
-    background: rgba(138, 192, 7, 0.2);
-
+    background: rgba(138, 192, 7, 0.2);*/
   }
 
   #lowerdiv {
-/*    width: 100%;
-    height: 200px;
-    padding: 15px;
+    /*width: 100%;*/
+    /*height: 200px;*/
+/*    padding: 15px;
     border-radius: 15px 50px;
     border: black solid 2px;
     background: rgba(52, 247, 238, 0.2);*/
   }
 
+  #formtable {
+
+    /*table-layout: fixed;*/
+    /*width: 100%;*/
+    /*padding: auto;*/
+  }
+
+  #formtable input {
+    /*width: 100%;*/
+  }
+
+
 </style>
-<div id="subbody">
-  <div id="upperdiv">
-    <h2>Job Status</h2>
+<!-- <div id="subbody"> -->
+  <div id="upperdiv" class="row">
+    <h2>Add Jobs</h2>
     <br />
-    <table>
+    <div class="col-md-12">
       <form class="form-login" role="form" method="post" action="">
         {{ form.csrf_token }}
-        <div class="container">
-          <table>
+        <!-- <div class="container"> -->
+          <table id="formtable">
             <tr>
               {% for crn in form.crns %}
                 {% for field in crn %}
@@ -71,19 +80,18 @@
               {% endfor %}
             </tr>
           </table>
+          <br />
+          <button class="btn btn-success" id="submitClasses" type="submit">Get Classes!</button>
         </div>
         <br />
-        <button class="btn btn-success" id="submitClasses" type="submit">Get Classes!</button>
       </form>
-      <br />
-    </table>
-    <br />
   </div>
 
-  <div style="width:100%; height:40px;"></div>
+  <!-- <div style="width:100%; height:20px;"></div> -->
 
-  <div class="container" id="lowerdiv">
-    <div class="row">
+  <div class="row" id="lowerdiv">
+    <h2>Job Status</h2>
+    <!-- <div class="row"> -->
       {% for job in jobs %}
         {% if job.available %}
           <div class="col-sm-3 jobdivwrapper">
@@ -108,9 +116,9 @@
           </div>
         </div>
       {% endfor %}
-    </div>
+    <!-- </div> -->
   </div>
-</div>
+<!-- </div> -->
 <!-- <div style="width:100%; height:20px;"></div> -->
 
 <script src="{{url_for('static', filename='jquery.min.js')}}"></script>

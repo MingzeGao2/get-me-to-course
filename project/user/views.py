@@ -149,7 +149,7 @@ def unconfirmed():
 def job():
     
     jobs = Job.query.filter_by(user_id=current_user.id)
-    print "getjobs:", jobs
+    # print "getjobs:", jobs
     
     form = PickingClassForm(request.form)
 
@@ -161,6 +161,7 @@ def job():
                     job = Job(field.data, datetime.datetime.now(), current_user.id)
                     db.session.add(job)
         db.session.commit()
+        return redirect(url_for('user.job'))
     return render_template('user/job.html', jobs=jobs, form=form)#, delroute=delroute)
 
 
