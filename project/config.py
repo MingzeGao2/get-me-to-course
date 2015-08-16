@@ -2,6 +2,8 @@
 
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
+mail_pass = "rqyersmdmtrzcsfh"
+mail_address = "ad.coursehunter@gmail.com"
 
 
 class BaseConfig(object):
@@ -24,8 +26,8 @@ class BaseConfig(object):
     # gmail authentication
     # MAIL_USERNAME = "mingze.gao.gmz@gmail.com"
     # MAIL_PASSWORD = 'qtncejoibqbpgvfs'
-    MAIL_USERNAME = "master.getmeclassses@gmail.com"
-    MAIL_PASSWORD = "dtyblbfoozujdsrl"
+    MAIL_USERNAME = mail_address
+    MAIL_PASSWORD = mail_pass
 
     # mail accounts
     # MAIL_DEFAULT_SENDER = 'mingze.gao.gmz@gmail.com'

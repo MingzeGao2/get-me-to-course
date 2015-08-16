@@ -13,33 +13,32 @@ sys.stderr = open("error.txt", 'w')
 # url for query
 base_url = "https://ui2web1.apps.uillinois.edu/BANPROD1/bwckschd.p_disp_detail_sched?term_in=120158&crn_in="
 
-
+mail_pass = "rqyersmdmtrzcsfh"
+mail_address = "ad.coursehunter@gmail.com"
 
 def get_msg(description, specification):
     if  specification == 0:
         return  "\r\n".join([
-            "From:master.getmeclasses@gmail.com",
-            "To: mingzegao1994.gmz@gmail.com",
-            "Subject: Catch This",
+            "From: " +mail_address,
+            "To: ",
+            "Subject: seats available",
             "",
-            "SEATS AVAILABLE " + description
+            "seats available: " + description
         ])
     if specification == 1:
         return "\r\n".join([
-            "From: mingze.gao.gmz@gmail.com",
-            "To: mingzegao1994.gmz@gmail.com",
-            "Subject: NO!!!",
+            "From:"+ mail_address, 
+            "To: ",
+            "Subject: seats unavailable",
             "",
-            "SEATS UNAVAILABLE " + description
+            "seats unavailable: " + description
         ])
 
     
 def sendEmail(description, specification, to_addr):
-    from_addr = "master.getmeclassses@gmail.com"
-    # to_addr = ["mingzegao1994.gsdfmz@gsdfmail.com", "mingze.gao.gmz@gmailsdf.com"]
-    # to_addr= "sdf.sdlfjsldjf"
-    username = 'master.getmeclassses@gmail.com'
-    password = 'dtyblbfoozujdsrl'
+    from_addr = mail_address
+    username =  mail_address
+    password = mail_pass
     try:
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.ehlo()
