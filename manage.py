@@ -128,7 +128,12 @@ def cov():
     print('HTML version: file://%s/index.html' % covdir)
     cov.erase()
 
-
+@manager.command
+def show_user():
+    print "show all users"
+    users = User.query.all()
+    for user in users:
+        print user.email, user.confirmed
 @manager.command
 def create_db():
     """Creates the db tables."""
@@ -157,7 +162,8 @@ def create_admin():
 def service():
     """Start the query service."""
     master()
-    app.run(host="0.0.0.0")
+    # app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=80)
 
 
 if __name__ == '__main__':
