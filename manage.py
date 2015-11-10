@@ -3,6 +3,7 @@ import os
 import sys
 import unittest
 import coverage
+import datetime
 
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -17,10 +18,9 @@ from pyquery import PyQuery as pq
 import mechanize
 import cookielib
 
-# from werkzeug.contrib.fixers import ProxyFix
-
 # app.config.from_object(os.environ['APP_SETTINGS'])
-# app.config.from_object("project.config.DevelopmentConfig")
+app.config.from_object(os.environ['APP_SETTINGS'])
+#app.config.from_object("project.config.ProductionConfig")
 
 migrate = Migrate(app, db)
 manager = Manager(app)
@@ -52,11 +52,13 @@ def worker():
             crn = jobs[i].crn
             res = getCourse(br,crn)
             if res:
-                print jobs[i].master.email ,res["description"],"avaliable:",jobs[i].available
+                print datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), jobs[i].master.email ,res["description"],"avaliable:",jobs[i].available
+                jobs[i].timestamp=datetime.datetime.now()
                 x = res["remaining"]
                 if (x[0] > 0 and x[1] > 0):
                     if (not jobs[i].available):
                         jobs[i].available=True
+                        jobs[i].timestamp=datetime.datetime.now()
                         db.session.add(jobs[i])
                         db.session.commit()
                     if (jobs[i].send_indicator):
@@ -71,6 +73,7 @@ def worker():
                         db.session.commit()
                 else:
                     if (jobs[i].available):
+                        jobs[i].timestamp=datetime.datetime.now()
                         jobs[i].available = False
                         db.session.add(jobs[i])
                         db.session.commit()
@@ -83,6 +86,9 @@ def worker():
                         db.session.commit()
                     else:
                         print ": no seats available"
+                db.session.add(jobs[i])
+                db.session.commit()
+
         time.sleep(waittime)
 
     
@@ -122,7 +128,12 @@ def cov():
     print('HTML version: file://%s/index.html' % covdir)
     cov.erase()
 
-
+@manager.command
+def show_user():
+    print "show all users"
+    users = User.query.all()
+    for user in users:
+        print user.email, user.confirmed
 @manager.command
 def create_db():
     """Creates the db tables."""
@@ -151,8 +162,9 @@ def create_admin():
 def service():
     """Start the query service."""
     master()
-    # app.run(host="0.0.0.0", port=80)
+    # app.run(host="0.0.0.0")
+    # app.run(host="0.0.0.0", port=80, threaded=True)
 
-# app.wsgi_app = ProxyFix(app.wsgi_app)
+
 if __name__ == '__main__':
     manager.run()
