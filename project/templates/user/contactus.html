@@ -1,0 +1,50 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+
+<div class="container">
+	<div class="row">
+		<div class = "col-sm-8">
+			<h1>Contact Us</h1>
+			<h4>We value your opinions</h4>
+			<form class="form-contact-us" role="form" method="post" action="">
+				{{ form.csrf_token }}
+				<p>
+					{{ form.email(placeholder="email") }}
+					<span class="error">
+						{% if form.email.errors %}
+							{% for error in form.email.errors %}
+								{{ error }}
+							{% endfor %}
+						{% endif %}
+					</span>
+				</p>
+				<p>
+					{{ form.title(placeholder="title") }}
+					<span class="error">
+						{% if form.title.errors %}
+							{% for error in form.title.errors %}
+								{{ error }}
+							{% endfor %}
+						{% endif %}
+					</span>
+				</p>
+				<p>
+					{{ form.detail(placeholder="detail") }}
+					<span class="error">
+						{% if form.detail.errors %}
+							{% for error in form.detail.errors %}
+								{{ error }}
+							{% endfor %}
+						{% endif %}
+					</span>
+				</p>
+				<button class="btn btn-success" type="submit">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
