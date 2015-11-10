@@ -8,8 +8,8 @@ import os
 import sys
 import datetime
 
-# sys.stdout = open("log.txt", 'w')
-# sys.stderr = open("error.txt", 'w')
+sys.stdout = open("log.txt", 'w')
+sys.stderr = open("error.txt", 'w')
 
 # url for query
 base_url = "https://ui2web1.apps.uillinois.edu/BANPROD1/bwckschd.p_disp_detail_sched?term_in=120158&crn_in="

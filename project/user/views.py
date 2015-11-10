@@ -149,21 +149,23 @@ def unconfirmed():
 def job():
     
     jobs = Job.query.filter_by(user_id=current_user.id)
-    # print "getjobs:", jobs
-    
     form = PickingClassForm(request.form)
-
-    # crn_list = {}
     if form.validate_on_submit():
-        for crn in form.crns:
-            for field in crn:
-                if field.data != '' and field.data != None and field.data != 'None': #and form.validate_crn(field.data):
-                    job = Job(field.data, datetime.datetime.now(), current_user.id)
-                    db.session.add(job)
+        for crn_form in form.crns:
+            crn = crn_form.data['crn']
+            if crn != '' and crn  != None and crn != 'None': 
+                try:
+                    int(crn)
+                except:
+                    flash("crn must be five digit integer", 'danger')
+                    continue
+                job = Job(int(crn), datetime.datetime.now(), current_user.id)
+                print "adding crn", crn
+                db.session.add(job)
+                    
         db.session.commit()
         return redirect(url_for('user.job'))
-    return render_template('user/job.html', jobs=jobs, form=form)#, delroute=delroute)
-
+    return render_template('user/job.html', jobs=jobs, form=form)
 
 @user_blueprint.route('/deletejob', methods=['POST'])
 @login_required

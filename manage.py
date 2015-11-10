@@ -163,7 +163,7 @@ def service():
     """Start the query service."""
     master()
     # app.run(host="0.0.0.0")
-    app.run(host="0.0.0.0", port=80)
+    # app.run(host="0.0.0.0", port=80, threaded=True)
 
 
 if __name__ == '__main__':
