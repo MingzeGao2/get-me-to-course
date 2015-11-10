@@ -17,6 +17,8 @@ from pyquery import PyQuery as pq
 import mechanize
 import cookielib
 
+from werkzeug.contrib.fixers import ProxyFix
+
 # app.config.from_object(os.environ['APP_SETTINGS'])
 app.config.from_object("project.config.DevelopmentConfig")
 
@@ -149,8 +151,8 @@ def create_admin():
 def service():
     """Start the query service."""
     master()
-    app.run(host="0.0.0.0", port=80)
+    # app.run(host="0.0.0.0", port=80)
 
-
+app.wsgi_app = ProxyFix(app.wsgi_app)
 if __name__ == '__main__':
     manager.run()
