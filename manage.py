@@ -149,7 +149,7 @@ def create_admin():
 def service():
     """Start the query service."""
     master()
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=80)
 
 
 if __name__ == '__main__':
