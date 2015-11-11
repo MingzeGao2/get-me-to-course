@@ -12,7 +12,7 @@ from flask.ext.login import login_user, logout_user, \
 
 from project.models import User, Job
 from project import db, bcrypt
-from .forms import LoginForm, RegisterForm, ChangePasswordForm, PickingClassForm
+from .forms import LoginForm, RegisterForm, ChangePasswordForm, PickingClassForm, ContactUsForm
 from project.token import generate_confirmation_token, confirm_token
 import datetime
 from project.email import send_email
@@ -21,7 +21,7 @@ from project.decorators import check_confirmed
 ################
 #### config ####
 ################
-
+admin_mail_address = "ad.coursehunter@gmail.com"
 user_blueprint = Blueprint('user', __name__,)
 
 
@@ -79,6 +79,19 @@ def logout():
     logout_user()
     flash('You were logged out.', 'success')
     return redirect(url_for('user.login'))
+
+
+@user_blueprint.route('/contactus', methods=['GET', 'POST'])
+def contactus():
+    form = ContactUsForm(request.form)
+    if form.validate_on_submit():
+        email = admin_mail_address
+        subject = form.title.data
+        html = render_template('user/useropinion.html', useremail=form.email.data, feedback=form.detail.data)
+        send_email(email, subject, html)
+        flash("Your feedback has been received! Thank you!")
+        return redirect(url_for('user.contactus'))
+    return render_template('user/contactus.html', form=form)
 
 
 @user_blueprint.route('/profile', methods=['GET', 'POST'])

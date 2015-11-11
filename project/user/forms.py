@@ -11,6 +11,11 @@ from crn_validator import is_valid_crn
 from project import browser
 from flask import flash
 
+class ContactUsForm(Form):
+    email = TextField('email', validators=[DataRequired(), Email()])
+    title = TextField('title', validators=[DataRequired(), Length(max=80)])
+    detail = TextField('detail', validators=[Length(max=400)])
+
 class LoginForm(Form):
     email = TextField('email', validators=[DataRequired(), Email()])
     password = PasswordField('password', validators=[DataRequired()])
