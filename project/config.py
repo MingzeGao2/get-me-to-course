@@ -57,10 +57,10 @@ class ProductionConfig(BaseConfig):
     """Production configuration."""
    # SECRET_KEY = 'my_precious'
     #DEBUG = False
-###    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/example' 
+    ###    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/example' 
  #   SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.sqlite')
-  #  DEBUG_TB_ENABLED = False
-#    STRIPE_SECRET_KEY = 'foo'
+ #  DEBUG_TB_ENABLED = False
+  #    STRIPE_SECRET_KEY = 'foo'
  #   STRIPE_PUBLISHABLE_KEY = 'bar'
     DEBUG = False
     WTF_CSRF_ENABLED = True
