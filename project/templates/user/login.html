@@ -9,7 +9,7 @@
     border: black solid 2px;
   }
 
-  #anouncementdiv {
+  .announcementdiv {
     /*width: 300px;*/
     border: black solid 2px;
     /*float: right;*/
@@ -52,11 +52,18 @@
 
 <div class="col-sm-1"></div>
 
-<div id="anouncementdiv" class="col-sm-7">
+<div class="col-sm-7">
+  <div class="row col-sm-12 announcementdiv">
+    <h1>Updates</h1>
+    {% include "updates.html" %}
 
-  <h1>Course Hunter <small>SP 2016</small></h1>
+  </div>
+  <div class="row col-sm-12" style="height:20px;"></div>  
+  <div class="row col-sm-12 announcementdiv">
+  <h1>Course Hunter <small>FA 2016</small></h1>
   <!-- {% block anouncement %}{% endblock %} -->
-  {% include "anouncement.html" %}
+  {% include "announcement.html" %}
+  </div>
 
 </div>
 

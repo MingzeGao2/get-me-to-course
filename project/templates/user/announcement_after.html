@@ -1,0 +1,27 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<style>
+
+  .announcementdiv {
+    /*width: 300px;*/
+    border: black solid 2px;
+    /*float: right;*/
+  }
+
+</style>
+<div class="container">
+  <div class="row col-sm-12 announcementdiv">
+    <h1>Updates</h1>
+    {% include "updates.html" %}
+  </div>
+  
+  <div class="row col-sm-12" style="height:20px;"></div>  
+  
+  <div class="row col-sm-12 announcementdiv">
+  <h1>Course Hunter <small>FA 2016</small></h1>
+  {% include "announcement.html" %}
+  </div>
+</div>
+
+{% endblock %}

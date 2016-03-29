@@ -17,6 +17,10 @@ from project.token import generate_confirmation_token, confirm_token
 import datetime
 from project.email import send_email
 from project.decorators import check_confirmed
+
+
+import os
+import stripe
 # from config import basedir
 ################
 #### config ####
@@ -24,6 +28,12 @@ from project.decorators import check_confirmed
 admin_mail_address = "ad.coursehunter@gmail.com"
 user_blueprint = Blueprint('user', __name__,)
 
+stripe_keys = {
+    'secret_key': os.environ['SECRET_KEY'],
+    'publishable_key': os.environ['PUBLISHABLE_KEY']
+}
+
+stripe.api_key = stripe_keys['secret_key']
 
 ################
 #### routes ####
@@ -203,5 +213,40 @@ def clean():
         db.session.delete(user)
     db.session.commit()
     return redirect(url_for('user.login'))
+
+@user_blueprint.route('/donation')
+def donate():
+    return render_template('user/donation.html', key=stripe_keys['publishable_key'])
+
+@user_blueprint.route('/charge', methods=['POST'])
+def charge():
+    # Amount in cents
+    # amount = 500
+    print("charging!")
+    amount = request.form['data-amount']
+
+    customer = stripe.Customer.create(
+        email = request.form['stripeEmail'],
+        card = request.form['stripeToken']
+    )
+
+    charge = stripe.Charge.create(
+        customer=customer.id,
+        amount=amount,
+        currency='usd',
+        description='Flask Charge'
+    )
+    print(charge)
+    flash("Thank you for the donation!!!", "success")
+    return redirect(url_for('user.donate'))
+
+@user_blueprint.route('/announcement')
+@login_required
+@check_confirmed
+def announcement():
+    return render_template('user/announcement_after.html')
+
+
+
 
 

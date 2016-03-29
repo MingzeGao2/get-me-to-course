@@ -12,8 +12,8 @@ sys.stdout = open("log.txt", 'w+')
 sys.stderr = open("error.txt", 'w+')
 
 # url for query
-base_url = "https://ui2web1.apps.uillinois.edu/BANPROD1/bwckschd.p_disp_detail_sched?term_in=120161&crn_in="
-
+# base_url = "https://ui2web1.apps.uillinois.edu/BANPROD1/bwckschd.p_disp_detail_sched?term_in=120161&crn_in="
+base_url = "https://ui2web1.apps.uillinois.edu/BANPROD1/bwckschd.p_disp_detail_sched?term_in=120168&crn_in="
 mail_pass = "rqyersmdmtrzcsfh"
 mail_address = "ad.coursehunter@gmail.com"
 

@@ -17,10 +17,12 @@
         {% if current_user.is_authenticated() and current_user.confirmed %}
         <li><a href="{{ url_for('user.profile') }}">Profile</a></li>
 	      <li><a href="{{ url_for('user.job')}}">Job</a></li>
+        <li><a href="{{ url_for('user.announcement')}}">Announcement</a></li>
 	      {% elif current_user.is_authenticated() %}
 	      <li><a href="{{ url_for('user.unconfirmed') }}">Confirm</a></li>
         {% endif %}
         <li><a href="{{ url_for('user.contactus') }}">Contact Us</a></li>
+        <li><a href="{{ url_for('user.donate') }}" style="color:gold;"><strong>Donate!</strong></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if current_user.is_authenticated() %}
