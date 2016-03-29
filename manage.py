@@ -13,10 +13,6 @@ from project.models import User, Job
 import datetime
 from multiprocessing import Process
 import time 
-from  service import sendEmail, getCourse
-from pyquery import PyQuery as pq
-import mechanize
-import cookielib
 
 # app.config.from_object(os.environ['APP_SETTINGS'])
 app.config.from_object(os.environ['APP_SETTINGS'])
