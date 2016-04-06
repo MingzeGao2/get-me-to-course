@@ -173,6 +173,7 @@ def job():
     
     jobs = Job.query.filter_by(user_id=current_user.id)
     form = PickingClassForm(request.form)
+    print form
     if form.validate_on_submit():
         for crn_form in form.crns:
             crn = crn_form.data['crn']
