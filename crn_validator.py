@@ -6,12 +6,7 @@ import smtplib
 from multiprocessing import Process
 import os
 import sys
-
-# sys.stdout = open("validator_log.txt", 'w')
-# sys.stderr = open("validator_error.txt", 'w')
-
-base_url = "https://ui2web1.apps.uillinois.edu/BANPROD1/bwckschd.p_disp_detail_sched?term_in=120161&crn_in="
-
+from service import base_url
 
 def initBrowser():
     # Browser
