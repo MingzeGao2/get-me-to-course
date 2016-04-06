@@ -1,5 +1,8 @@
 export APP_SETTINGS="project.config.ProductionConfig"
 
-export PUBLISHABLE_KEY=pk_test_vT5Fw6xGiXm0ko6PXZjRR3zf SECRET_KEY=sk_test_hKRj6Q4PfaCeLdEy9IKkzFEu
+export PUBLISHABLE_KEY=pk_live_M94peE17sd3FsUPeEMOeBepq SECRET_KEY=sk_live_wQcTo3xBhoZZQIuHWFaMUd4V
 
 gunicorn --bind 0.0.0.0:8001 wsgi:app
+
+### for testing:
+export PUBLISHABLE_KEY=pk_test_vT5Fw6xGiXm0ko6PXZjRR3zf SECRET_KEY=sk_test_hKRj6Q4PfaCeLdEy9IKkzFEu
