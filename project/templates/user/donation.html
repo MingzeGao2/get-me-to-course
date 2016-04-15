@@ -13,13 +13,18 @@
   }
 
   td div {
-    height: 50px;
+    height: 35px;
     border-radius: 20%;
   }
 
   input[type="number"] {
-    font-size: 15px;
+    font-size: 13px;
     height: 35px;
+  }
+
+  .otherdiv {
+    height: 45px;
+    border-radius: 20%;
   }
 
 </style>
@@ -40,24 +45,24 @@
 <tbody>
   <tr>
     <td>
-      <input type="radio" id="1" value="50"></input>
-      <div class="mondiv" for="1">$0.5</div>
+      <input type="radio" id="1" value="100"></input>
+      <div class="mondiv" for="1">$1</div>
     </td>
     <td>
-      <input type="radio" id="2" value="100"></input>
-      <div class="mondiv" for="2">$1</div>
+      <input type="radio" id="2" value="200"></input>
+      <div class="mondiv" for="2">$2</div>
     </td>
     <td>
-      <input type="radio" id="3" value="200"></input>
-      <div class="mondiv" for="3">$2</div>
+      <input type="radio" id="3" value="500"></input>
+      <div class="mondiv" for="3">$5</div>
     </td>
     <td>
-      <input type="radio" id="4" value="500"></input>
-      <div class="mondiv" for="4">$5</div>
+      <input type="radio" id="4" value="1000"></input>
+      <div class="mondiv" for="4">$10</div>
     </td>
     <td>
       <input type="radio" id="5"></input>
-      <div class="mondiv" for="5">other: $<input type="number" step="0.01" id="5a"></input></div>
+      <div class="mondiv otherdiv" for="5">other: $<input type="number" step="0.01" id="5a"></input></div>
       
     </td>
   </tbody>

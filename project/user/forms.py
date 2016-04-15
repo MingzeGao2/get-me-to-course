@@ -61,6 +61,10 @@ class ChangePasswordForm(Form):
         ]
     )
 
+class EmailForm(Form):
+    email = TextField('Email', validators=[Email(), DataRequired()])
+
+
 class crnForm(Form):
     crn = TextField('crn', validators=[Length(5), Optional()])    
     def validate_crn(self):

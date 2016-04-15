@@ -12,7 +12,7 @@ from flask.ext.login import login_user, logout_user, \
 
 from project.models import User, Job
 from project import db, bcrypt
-from .forms import LoginForm, RegisterForm, ChangePasswordForm, PickingClassForm, ContactUsForm
+from .forms import LoginForm, RegisterForm, ChangePasswordForm, PickingClassForm, ContactUsForm, EmailForm
 from project.token import generate_confirmation_token, confirm_token
 import datetime
 from project.email import send_email
@@ -165,6 +165,45 @@ def unconfirmed():
         return redirect('main.home')
     flash('Please confirm your account!', 'warning')
     return render_template('user/unconfirmed.html')
+
+@user_blueprint.route('/forgotpw', methods=["GET", "POST"])
+def forgotpw():
+    form = EmailForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        print("AHAHAHAHHAHA", user)
+        flash("You will receive a link for password reset if the email is valid.", "success")
+        if user != None:
+            subject = "Reset password requested"
+
+            token = generate_confirmation_token(user.email)
+            reset_url = url_for('user.reset_password', token=token, _external=True)
+            html = render_template('user/resetpw_email.html', reset_url=reset_url )
+
+            send_email(user.email, subject, html)
+        return redirect(url_for('user.login'))
+    return render_template('user/resetpw_email_page.html', form=form)
+
+
+@user_blueprint.route('/reset_password/<token>', methods=["GET", "POST"])
+def reset_password(token):
+    try:
+        email = confirm_token(token)
+        print "email is" + email
+    except:
+        print "confirm failed"
+        flash('The confirmation link is invalid or has expired', 'danger')
+
+    form = ChangePasswordForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=email).first_or_404()
+        user.password = bcrypt.generate_password_hash(form.password.data)
+        db.session.commit()
+        flash('Password successfully changed.', 'success')
+        return redirect(url_for('user.login'))
+    return render_template('user/change_pw.html', form=form)
+
 
 @user_blueprint.route('/job', methods=['GET', 'POST'])
 @login_required
